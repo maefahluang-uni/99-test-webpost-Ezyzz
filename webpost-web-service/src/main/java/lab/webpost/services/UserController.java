@@ -14,10 +14,14 @@ import lab.webpost.domain.User;
 public class UserController {
     @Autowired
     UserRepository userRepository;
-
-
-    //TODO: end point for validate user by username 
-    public ResponseEntity<User> getUserByUsername(String username) {
-       return null;
+    
+    @GetMapping("/users/{username}")
+    public ResponseEntity<User> getUserByUsername(@PathVariable String username) {
+    User user = userRepository.findByUsername(username);
+    if (user != null) {
+        return ResponseEntity.ok(user);
+    } else {
+        return ResponseEntity.notFound().build();
     }
+}
 }

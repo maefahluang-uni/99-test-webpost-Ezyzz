@@ -5,11 +5,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-
+@Entity
 //TODO: add annotation for entity
 
 public class User {
-
+    @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     //TODO: add annotation for id
     private Long id;
     private String username;

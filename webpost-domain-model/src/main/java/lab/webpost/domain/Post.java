@@ -8,6 +8,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -17,16 +18,18 @@ import lab.jackson.LocalDateTimeDeserializer;
 import lab.jackson.LocalDateTimeSerializer;
 
 //TODO: add annotation for entity
-
+@Entity
 public class Post {
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     //TODO: add annotation for id
     private Long id;
 
     private String title;
     private String body;
     private LocalDateTime createdAt;
-
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "performer_id")
     private User author;
 
     
@@ -57,7 +60,8 @@ public class Post {
     public void setBody(String body) {
         this.body = body;
     }
-
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     //TODO: add the JSONSerialze and JsonDeserialize
     public LocalDateTime getCreatedAt() {
         return createdAt;
